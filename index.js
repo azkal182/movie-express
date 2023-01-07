@@ -1,6 +1,9 @@
 const express = require('express')
 const app = express()
 const port = 3030
+const cors = require("cors");
+
+app.use(cors({ origin: true }));
 /*
 app.get('/', (req, res) => {
   res.send('Hello World!')
