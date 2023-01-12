@@ -6,6 +6,8 @@ admin.initializeApp({
  credential: admin.credential.cert(serviceAccount),
 });
 
+const fs = require('fs')
+
 const db = admin.firestore();
 
 router.get("/data", (req, res) => {
@@ -557,4 +559,39 @@ router.get("/genre/:genre", async function (req, res) {
 */
 });
 
+
+router.get("/download", (req, res) => {
+
+   let page = req.query.page || 1;
+   if (isNaN(page) || page == "") page = 1;
+   else page = parseInt(page);
+   let perPage = req.query.perPage;
+   if (isNaN(perPage) || perPage == "") perPage = 24;
+   else perPage = parseInt(perPage);
+
+   let dataRef = db.collection("series");
+   let data = dataRef
+   .orderBy("datePublished", "desc")
+  .get()
+  .then((snapshot) => {
+   let data = [];
+   snapshot.forEach((doc) => {
+    
+
+      data.push(doc.data());
+    //data.push({ id: doc.id });
+   });
+
+   return Promise.all([data]);
+  })
+  .then(([data]) => {
+   fs.writeFileSync(`seriesAll.json`, JSON.stringify(data));
+   res.json({status: 'oke'});
+  })
+  .catch((err) => {
+   res.status(500).json({ error: err.message });
+  });
+   
+   
+});
 module.exports = router;

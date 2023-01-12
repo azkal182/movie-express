@@ -6,6 +6,7 @@ router.get('/', (req, res) => {
 })
 router.use('/movie', require("./movie"))
 router.use('/tv', require("./tv"))
+router.use('/search', require("./search"))
 
 
 module.exports = router
