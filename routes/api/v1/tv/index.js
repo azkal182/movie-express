@@ -4,8 +4,10 @@ const Tv = require('../../../../lib/tv.js')
 const serial = new Tv()
 
 router.get('/', async (req, res) => {
- const data = await serial.index()
-  res.send({data})
+ const page = req.query.page ? parseInt(req.query.page) : 1
+ console.log(page)
+ const data = await serial.index('latest', page)
+  res.send({message: 'success', perPgage: data.results.length,...data})
 })
 router.get('/latest', async (req, res) => {
  const page = req.query.page ? parseInt(req.query.page) : 1
