@@ -10,8 +10,15 @@ router.get('/', async (req, res) => {
 })
 router.get('/latest', async (req, res) => {
  const page = req.query.page ? parseInt(req.query.page) : 1
- console.log(page)
+
  const data = await movie.index('latest', page)
+  res.send({message: 'success', perPgage: data.results.length,...data})
+})
+
+router.get('/top-today', async (req, res) => {
+ const page = req.query.page ? parseInt(req.query.page) : 1
+
+ const data = await movie.index('top-movie-today', page)
   res.send({message: 'success', perPgage: data.results.length,...data})
 })
 
