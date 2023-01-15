@@ -5,13 +5,13 @@ const serial = new Tv()
 
 router.get('/', async (req, res) => {
  const page = req.query.page ? parseInt(req.query.page) : 1
- 
+
  const data = await serial.index('latest', page)
   res.send({message: 'success', perPgage: data.results.length,...data})
 })
 router.get('/latest', async (req, res) => {
  const page = req.query.page ? parseInt(req.query.page) : 1
- 
+
  const data = await serial.index('latest', page)
   res.send({message: 'success', perPgage: data.results.length,...data})
 })
@@ -25,7 +25,7 @@ router.get('/top-today', async (req, res) => {
 
 router.get('/popular', async (req, res) => {
  const page = req.query.page ? parseInt(req.query.page) : 1
- 
+
  const data = await serial.index('popular', page)
   res.send({message: 'success', perPgage: data.results.length,...data})
 })
@@ -39,7 +39,10 @@ router.get('/series/:series', async (req, res) => {
 })
 
 router.get('/country/:country', async (req, res) => {
- const params = req.params.country
+ let params = req.params.country
+ if (params === 'korea') {
+    params = 'south-korea'
+ }
  const page = req.query.page ? parseInt(req.query.page) : 1
  const data = await serial.country(params,page)
   res.send({message: 'success', perPgage: data.results.length,...data})
