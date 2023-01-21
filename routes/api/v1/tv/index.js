@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const cors = require("cors");
 const Tv = require('../../../../lib/tv.js')
 const serial = new Tv()
 
@@ -31,14 +32,14 @@ router.get('/popular', async (req, res) => {
 })
 
 
-router.get('/series/:series', async (req, res) => {
+router.get('/series/:series', cors(), async (req, res) => {
  const params = req.params.series
  const page = req.query.page ? parseInt(req.query.page) : 1
  const data = await serial.series(params,page)
   res.send({message: 'success', perPgage: data.results.length,...data})
 })
 
-router.get('/country/:country', async (req, res) => {
+router.get('/country/:country',cors(), async (req, res) => {
  let params = req.params.country
  if (params === 'korea') {
     params = 'south-korea'
@@ -48,7 +49,7 @@ router.get('/country/:country', async (req, res) => {
   res.send({message: 'success', perPgage: data.results.length,...data})
 })
 
-router.get('/genre/:genre', async (req, res) => {
+router.get('/genre/:genre',cors(), async (req, res) => {
  const params = req.params.genre
  const page = req.query.page ? parseInt(req.query.page) : 1
  const data = await serial.genre(params,page)
@@ -56,7 +57,7 @@ router.get('/genre/:genre', async (req, res) => {
 
 })
 
-router.get('/year/:year', async (req, res) => {
+router.get('/year/:year', cors(), async (req, res) => {
  const params = req.params.year
  const page = req.query.page ? parseInt(req.query.page) : 1
  const data = await serial.year(params,page)
