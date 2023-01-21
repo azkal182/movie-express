@@ -9,7 +9,7 @@ const responseTime = require('express-response-time')
 app.use(responseTime((methond, url, time) => {
     console.log(`${methond} ${url}     (${time} ms)`)
 }))
-app.use(cors({ origin: true }));
+app.use(cors());
 
 
 const router = require('./routes')
