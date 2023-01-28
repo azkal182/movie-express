@@ -12,10 +12,10 @@ const redis = new Redis({
 
 async function search(query) {
 
-        const cachedData = await checkCache('search/' + query);
+        const cachedData = await checkCache('searchn/' + query);
         if (cachedData) {
           console.log('Data ditemukan dalam cache');
-          return cachedData;
+         // return cachedData;
         }
     const config = {
         params: {
@@ -106,7 +106,7 @@ async function search(query) {
         };
     });
 
-    await saveCache('search/' + query, result);
+    await saveCache('searchn/' + query, result);
     return result
 }
 
