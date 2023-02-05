@@ -1,8 +1,8 @@
 const fs = require("fs");
 const admin = require("./node_modules/firebase-admin");
 
-const today = admin.firestore.FieldValue.serverTimestamp()
-const time = new admin.firestore.Timestamp(1673373650,0)
+const today = admin.firestore.FieldValue.serverTimestamp();
+const time = new admin.firestore.Timestamp(1673373650, 0);
 //console.log(time)
 //console.log(new Date(time.seconds *1000)
 /*
@@ -24,9 +24,9 @@ fs.readFile("seriesAll.json", "utf-8", (err, data) => {
 */
 
 fs.readFile("serial.json", "utf-8", (err, data) => {
-    if (err) throw err;
-    const jsonData = JSON.parse(data);
-    
-    console.log(jsonData)
-    // do something with jsonData
+  if (err) throw err;
+  const jsonData = JSON.parse(data);
+
+  console.log(jsonData);
+  // do something with jsonData
 });
