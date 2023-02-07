@@ -58,4 +58,11 @@ router.get('/detail/:id', async (req, res) => {
   res.send({message: 'success',...data})
 })
 
+router.get('/tes', async (req, res) => {
+ 
+ 
+ const data = await movie.tes()
+  res.send(data)
+})
+
 module.exports = router
