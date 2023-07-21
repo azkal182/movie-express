@@ -74,7 +74,7 @@ async function search(query) {
            // let tag = $(this).find("p.cat-links > a:nth-child(1)").attr("href");
             
             //if (!tag.match(/series/gm)) {
-            if (regex.test(title)) {
+            if (!regex.test(title)) {
                 index.push({
                     title,
                     id,
