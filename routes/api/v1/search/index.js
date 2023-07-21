@@ -12,12 +12,13 @@ const redis = new Redis({
 })
 
 async function search(query) {
-
+/*
         const cachedData = await checkCache('searchn/' + query);
         if (cachedData) {
           console.log('Data ditemukan dalam cache');
          // return cachedData;
         }
+        */
     const config = {
         params: {
             s: query,
@@ -34,13 +35,17 @@ async function search(query) {
 
         let list = $(".search-item");
         let index = [];
+        //console.log(list.html())
 
-
+        
         list.each(function (v, i) {
             let title = $(this).find("figure > a").attr("title");
 
             let poster = "https:" + $(this).find("figure > a > img").attr("src");
             let id = getId($(this).find("figure > a").attr("href"));
+            
+            /*
+            
             let categories = $(this)
                 .find(".cat-links")
                 .text()
@@ -63,42 +68,53 @@ async function search(query) {
             //console.log(ratingValue)
 
             //console.log(reviewCount)
+            */
             let link = $(this).find(".search-content > h2 > a").attr("href");
-            let tag = $(this).find("p.cat-links > a:nth-child(1)").attr("href");
-            if (!tag.match(/series/gm)) {
+            const regex = /\bseries\b/i; 
+           // let tag = $(this).find("p.cat-links > a:nth-child(1)").attr("href");
+            
+            //if (!tag.match(/series/gm)) {
+            if (regex.test(title)) {
                 index.push({
                     title,
                     id,
                     type: 'movie',
+                    poster,
+                    link,
+                    /*
                     dateCreated,
                     director,
                     categories,
                     categories,
                     genres,
-                    poster,
                     reviewCount,
                     ratingValue,
                     trailer,
-                    link,
+                    */
                 });
             } else {
                 index.push({
                     title,
                     id,
                     type: 'tv',
+                    poster,
+                    link,
+                    /*
                     dateCreated,
                     director,
                     categories,
                     categories,
                     genres,
-                    poster,
                     reviewCount,
                     ratingValue,
                     trailer,
-                    link,
+                    */
                 });
             }
+            
+            
         });
+        
         //console.log(index)
         return {
             message: "success",
@@ -107,7 +123,7 @@ async function search(query) {
         };
     });
 
-    await saveCache('searchn/' + query, result);
+    //await saveCache('searchn/' + query, result);
     return result
 }
 
@@ -115,7 +131,8 @@ function getId(href) {
     var match = href.match(
         /^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)([\/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/
     );
-    return match[5].split("/").join("");
+   // return match[5].split("/").join("");
+   return href
 }
 
 async function checkCache(url) {
@@ -134,6 +151,7 @@ router.get('/', async (req, res) => {
         const data = await search(query)
         //console.log(data)
         res.send(data)
+        //res.send({'data':'oke'})
     } else {
         res.send({ status: 'error', message: 'missing query q' })
     }
