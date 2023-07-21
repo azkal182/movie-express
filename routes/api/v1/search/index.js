@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const axios = require('axios')
 const cheerio = require('cheerio')
-const url = 'https://lk21official.info/'
+//const url = 'https://lk21official.info/'
+const url = process.env.HOST_MOVIE ?? "https://a.lk21official.lol/";
 const { Redis } = require('@upstash/redis')
 
 const redis = new Redis({
