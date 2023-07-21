@@ -132,7 +132,7 @@ function getId(href) {
         /^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)([\/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/
     );
    // return match[5].split("/").join("");
-   return href
+   return href.replaceAll('/','')
 }
 
 async function checkCache(url) {
