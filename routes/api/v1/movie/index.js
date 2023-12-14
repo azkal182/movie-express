@@ -54,8 +54,13 @@ router.get('/year/:year', async (req, res) => {
 router.get('/detail/:id', async (req, res) => {
  const params = req.params.id
  
- const data = await movie.detail(params)
+ try {
+  const data = await movie.detail(params)
   res.send({message: 'success',...data})
+ } catch (error) {
+  console.log(error.message)
+  res.status(500).json({status:'error'})
+ }
 })
 
 router.get('/tes', async (req, res) => {
